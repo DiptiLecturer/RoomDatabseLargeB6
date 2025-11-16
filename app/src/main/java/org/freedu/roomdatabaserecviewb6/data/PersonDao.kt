@@ -26,4 +26,7 @@ interface PersonDao {
 
     @Query("SELECT * FROM person_table order by id DESC")
     fun getAllPersons(): LiveData<List<Person>>
+    //search query
+    @Query("SELECT * FROM person_table WHERE  name LIKE :query ORDER BY id DESC")
+    fun searchPersons(query: String):LiveData<List<Person>>
 }

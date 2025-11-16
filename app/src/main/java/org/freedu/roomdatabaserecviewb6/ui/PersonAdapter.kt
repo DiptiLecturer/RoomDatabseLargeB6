@@ -14,44 +14,49 @@ private val colors = listOf(
     0xFFBA68C8.toInt()  // Purple
 )
 class PersonAdapter(
-    private var personList: List<Person>,
-    private val onEdit:(Person)->Unit,
-    private val onDelete:(Person)->Unit
+    private val onEdit: (Person) -> Unit,
+    private val onDelete: (Person) -> Unit
+) : RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
 
-) :
-    RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
+    private var fullList: MutableList<Person> = mutableListOf()
+    private var displayedList: MutableList<Person> = mutableListOf()
 
     inner class PersonViewHolder(val binding: ItemPersonBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): PersonAdapter.PersonViewHolder {
-        val binding = ItemPersonBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
+        val binding = ItemPersonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PersonViewHolder(binding)
-
     }
 
-    override fun onBindViewHolder(holder: PersonAdapter.PersonViewHolder, position: Int) {
-       val person = personList[position]
-       with(holder.binding){
-           tvName.text = person.name
-           tvEmail.text = person.email
-           btnEdit.setOnClickListener {
-               onEdit(person)
-           }
-           btnDelete.setOnClickListener {
-               onDelete(person)
-           }
-           root.setBackgroundColor(colors[position % colors.size])
-       }
+    override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
+        val person = displayedList[position]
+        with(holder.binding) {
+            tvName.text = person.name
+            tvEmail.text = person.email
+            btnEdit.setOnClickListener { onEdit(person) }
+            btnDelete.setOnClickListener { onDelete(person) }
+        }
     }
 
-    override fun getItemCount(): Int = personList.size
+    override fun getItemCount(): Int = displayedList.size
 
-    fun updateList(newList:List<Person>){
-        personList = newList
+    // Update full list
+    fun updateList(newList: List<Person>) {
+        fullList.clear()
+        fullList.addAll(newList)
+        displayedList.clear()
+        displayedList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+    // Filter by search query
+    fun filter(query: String) {
+        displayedList = if (query.isEmpty()) {
+            fullList.toMutableList()
+        } else {
+            fullList.filter { it.name.contains(query, ignoreCase = true) }.toMutableList()
+        }
         notifyDataSetChanged()
     }
 }

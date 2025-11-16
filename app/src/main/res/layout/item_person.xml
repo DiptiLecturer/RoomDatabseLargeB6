@@ -16,6 +16,7 @@
         android:orientation="vertical"
         android:padding="12dp">
 
+        <!-- Name -->
         <TextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
@@ -24,8 +25,12 @@
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginBottom="6dp"/>
+            android:layout_marginBottom="4dp"
+            android:ellipsize="none"
+            android:scrollHorizontally="false"
+            android:breakStrategy="simple" />
 
+        <!-- Email -->
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="match_parent"
@@ -33,33 +38,38 @@
             android:text="Aminul@gmail.com"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="8dp"
+            android:ellipsize="none"
+            android:scrollHorizontally="false"
+            android:breakStrategy="simple" />
 
+        <!-- Button Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="end">
 
             <Button
                 android:id="@+id/btnEdit"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@android:color/holo_blue_dark"
-                android:text="Edit"
+                android:text="E"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"/>
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btnDelete"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/holo_red_dark"
-                android:text="Delete"
+                android:text="D"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"/>
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
